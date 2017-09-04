@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyTree</string>
+    <string name="subtitle">Better Learning, Better Growth</string>
+    <string name="logo">logo</string>
+    <string name="signIn">sign in button</string>
+    <string name="signUp">sign up button</string>
+</resources>
