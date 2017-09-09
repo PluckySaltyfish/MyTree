@@ -1,5 +1,6 @@
 package com.example.plucky.mytree;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -35,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i = new Intent(LoginActivity.this, Navi.class);
+                startActivity(i);
             }
         });
 

@@ -4,4 +4,8 @@
     <string name="logo">logo</string>
     <string name="signIn">sign in button</string>
     <string name="signUp">sign up button</string>
+    <string name="tree_navi">树</string>
+    <string name="me_navi">个人</string>
+    <string name="task_navi">任务</string>
+    <string name="achievement_navi">成就</string>
 </resources>
