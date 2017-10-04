@@ -5,7 +5,17 @@
               android:layout_height="match_parent"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              tools:context=".Navi">
+              tools:context=".MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:logo="@drawable/logo2"
+        android:layout_marginTop="25dp"
+        android:padding="0dp"
+        />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
