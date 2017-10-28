@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_navi);
+        setContentView(R.layout.tab_nav);
         initViews();
 
         if (Build.VERSION.SDK_INT >= 21) {

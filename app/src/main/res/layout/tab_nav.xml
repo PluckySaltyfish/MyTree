@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:background="@color/blue"
         android:logo="@drawable/logo2"
         android:layout_marginTop="25dp"
@@ -20,7 +20,7 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="98dp"
+        android:layout_height="56dp"
         android:background="@color/blue"
 
         app:tabIndicatorColor="@color/white"
@@ -34,7 +34,8 @@
         app:tabMode="fixed"
 
         app:tabBackground="@drawable/selected"
-        app:tabTextAppearance="@style/MyTabLayout"/>
+        app:tabTextAppearance="@style/MyTabLayout"
+        />
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
