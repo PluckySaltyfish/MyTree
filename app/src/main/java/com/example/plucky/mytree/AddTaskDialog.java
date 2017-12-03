@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -30,6 +31,7 @@ class AddTaskDialog  extends Dialog implements View.OnClickListener{
     private Button TimeSelector1,TimeSelector2;
     private TextView ConfirmTxt;
     private TextView CancelTxt;
+    private EditText TaskContent;
     private Spinner TimeLimit;
     private Context mContext;
     private OnCloseListener listener;
@@ -68,6 +70,7 @@ class AddTaskDialog  extends Dialog implements View.OnClickListener{
         private void initView(){
             mTask = new Task(count);
             TimeLimit=(Spinner)findViewById(R.id.time_limit);
+            TaskContent=(EditText)findViewById(R.id.task_content);
             adapter = ArrayAdapter.createFromResource(mContext, R.array.time, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -154,6 +157,7 @@ class AddTaskDialog  extends Dialog implements View.OnClickListener{
                     if(listener != null){
                         listener.onClick(this, true);
                     }
+                    mTask.setContent(TaskContent.getText().toString());
                     Log.d(TAG, "onClick: "+mTask.toString());
                     break;
                 case R.id.time_select1:
