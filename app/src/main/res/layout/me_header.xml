@@ -20,7 +20,7 @@
         tools:ignore="ContentDescription,MissingConstraints"
         tools:layout_editor_absoluteY="0dp"/>
 
-    <ImageView
+    <com.example.plucky.mytree.AvatarImageView
         android:id="@+id/head_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
