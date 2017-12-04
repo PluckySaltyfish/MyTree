@@ -219,7 +219,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
         android:autoLink="all"
-        android:text="@string/fuwutiaokuan"
+        android:text="@string/service_rule"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

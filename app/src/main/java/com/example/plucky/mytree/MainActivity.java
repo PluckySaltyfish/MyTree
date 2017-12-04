@@ -1,3 +1,4 @@
+
 package com.example.plucky.mytree;
 
 import android.graphics.Color;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tab_nav);
+        setContentView(R.layout.tab_navigation);
         initViews();
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -95,8 +96,5 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
-
-
-
 
 }

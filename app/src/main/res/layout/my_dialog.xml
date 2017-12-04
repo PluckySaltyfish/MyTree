@@ -69,6 +69,8 @@
             android:gravity="center"
             android:textColor="@color/black"/>
 
+
+
         <Button
             android:id="@+id/time_select1"
             android:layout_width="match_parent"
@@ -129,6 +131,18 @@
 
 
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/task_content"
+            android:layout_width="wrap_content"
+            android:hint="@string/task_content_hint"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:ems="10"
+            android:inputType="textMultiLine"/>
     </LinearLayout>
 
 

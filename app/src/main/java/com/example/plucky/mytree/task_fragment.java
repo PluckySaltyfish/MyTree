@@ -1,25 +1,28 @@
+
 package com.example.plucky.mytree;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class task_fragment extends Fragment implements TaskAdapter.MyItemLongClickListener,TaskAdapter.MyItemClickListerner {
+public class task_fragment extends Fragment implements TaskAdapter.MyItemLongClickListener,TaskAdapter.MyItemClickListener {
     private List<Task> taskList = new ArrayList<>();
     private FloatingActionButton mAddFAB,mResourceFAB,mTaskFAB;
     private int ListCount;
@@ -27,6 +30,8 @@ public class task_fragment extends Fragment implements TaskAdapter.MyItemLongCli
     private AddTaskDialog mdialog;
     private TaskAdapter adapter;
     private LinearLayoutManager layoutManager;
+    private Button Filter;
+    private EditText year,month,day;
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
 
@@ -41,6 +46,7 @@ public class task_fragment extends Fragment implements TaskAdapter.MyItemLongCli
 
         recyclerView =(RecyclerView)v.findViewById(R.id.recycler_view);
 
+        Filter = (Button)v.findViewById(R.id.filter);
         mResourceFAB=(FloatingActionButton)v.findViewById(R.id.resource_fab);
         mTaskFAB=(FloatingActionButton)v.findViewById(R.id.task_fab);
         mAddFAB=(FloatingActionButton)v.findViewById(R.id.add_fab);
@@ -50,18 +56,9 @@ public class task_fragment extends Fragment implements TaskAdapter.MyItemLongCli
         mTaskFAB.setEnabled(false);
         mResourceFAB.setEnabled(false);
 
-
-//        recyclerView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//
-//                mTaskFAB.setVisibility(View.INVISIBLE);
-//                mResourceFAB.setVisibility(View.INVISIBLE);
-//                mTaskFAB.setEnabled(false);
-//                mResourceFAB.setEnabled(false);
-//                return false;
-//            }
-//        });
+        year=(EditText)v.findViewById(R.id.year);
+        month=(EditText)v.findViewById(R.id.month);
+        day=(EditText)v.findViewById(R.id.day);
 
         layoutManager= new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -85,8 +82,6 @@ public class task_fragment extends Fragment implements TaskAdapter.MyItemLongCli
                                     taskList.add(mdialog.getTask());
                                     UpdateUI();
                                     dialog.dismiss();
-
-
                                 }
 
                             }
@@ -154,16 +149,57 @@ public class task_fragment extends Fragment implements TaskAdapter.MyItemLongCli
     }
 
     @Override
-    public void onItemLongClick(View view,int position){
-        Toast.makeText(getActivity(),"LongClick "+position,Toast.LENGTH_SHORT).show();
+    public void onItemLongClick(View view, final int position){
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder (getActivity());
+        dialog.setTitle("删除任务");
+        dialog.setMessage("确定要删除此任务吗？");
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("确定", new DialogInterface.
+                OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                taskList.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        dialog.setNegativeButton("取消", new DialogInterface.
+                OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }); dialog.show();
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(getActivity(),"Click "+position,Toast.LENGTH_SHORT).show();
+        Task mTask = taskList.get(position);
+        if (mTask.getTimeLimit()==0){
+            AlertDialog.Builder dialog = new AlertDialog.Builder (getActivity());
+            dialog.setTitle("开始");
+            dialog.setMessage("要开始此任务吗？");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("确定", new DialogInterface.
+                    OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //锁屏倒计时
+                }
+            });
+            dialog.setNegativeButton("取消", new DialogInterface.
+                    OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }); dialog.show();
+        }
         mTaskFAB.setVisibility(View.INVISIBLE);
         mResourceFAB.setVisibility(View.INVISIBLE);
         mTaskFAB.setEnabled(false);
         mResourceFAB.setEnabled(false);
     }
 }
+

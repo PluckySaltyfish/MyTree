@@ -1,3 +1,5 @@
+
+
 package com.example.plucky.mytree;
 
 
@@ -13,21 +15,21 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private List<Task> mTasksList;
     MyItemLongClickListener mLongClickListener;
-    MyItemClickListerner mItemClickListerner;
+    MyItemClickListener mItemClickListener;
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener,View.OnClickListener {
         TextView status;
         TextView task_content;
-        ImageView delete;
-        MyItemLongClickListener mLongClickListener;
-        MyItemClickListerner mItemClickListerner;
 
-        ViewHolder(View view,MyItemLongClickListener mLongClickListener,MyItemClickListerner myItemClickListerner) {
+        MyItemLongClickListener mLongClickListener;
+        MyItemClickListener mItemClickListener;
+
+        ViewHolder(View view,MyItemLongClickListener mLongClickListener,MyItemClickListener myItemClickListener) {
             super(view);
             status = (TextView) view.findViewById(R.id.status_text);
             task_content = (TextView) view.findViewById(R.id.taskText);
-            delete=(ImageView)view.findViewById(R.id.delete_task);
+
             this.mLongClickListener = mLongClickListener;
-            this.mItemClickListerner = myItemClickListerner;
+            this.mItemClickListener = myItemClickListener;
             view.setOnLongClickListener(this);
             view.setOnClickListener(this);
 
@@ -43,8 +45,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            if(mItemClickListerner != null){
-                mItemClickListerner.onItemClick(view,getAdapterPosition());
+            if(mItemClickListener != null){
+                mItemClickListener.onItemClick(view,getAdapterPosition());
             }
         }
 
@@ -58,7 +60,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()) .inflate(R.layout.task_item, parent, false);
-        ViewHolder holder = new ViewHolder(view,mLongClickListener,mItemClickListerner);
+        ViewHolder holder = new ViewHolder(view,mLongClickListener, mItemClickListener);
 
         return holder;
     }
@@ -81,12 +83,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         this.mLongClickListener = listener;
     }
 
-    public interface MyItemClickListerner{
+    public interface MyItemClickListener {
         public void onItemClick(View view,int position);
     }
 
-    void setOnItemClickListener(MyItemClickListerner listener){
-        this.mItemClickListerner=listener;
+    void setOnItemClickListener(MyItemClickListener listener){
+        this.mItemClickListener =listener;
     }
 
 
@@ -95,3 +97,4 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
 
 }
+
