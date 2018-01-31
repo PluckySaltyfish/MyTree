@@ -2,6 +2,7 @@
 package com.example.plucky.mytree;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -16,10 +17,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.feezu.liuli.timeselector.TimeSelector;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class task_fragment extends Fragment implements TaskAdapter.MyItemLongClickListener,TaskAdapter.MyItemClickListener {
@@ -30,8 +37,9 @@ public class task_fragment extends Fragment implements TaskAdapter.MyItemLongCli
     private AddTaskDialog mdialog;
     private TaskAdapter adapter;
     private LinearLayoutManager layoutManager;
-    private Button Filter;
-    private EditText year,month,day;
+    private Button TimeFilter;
+    private DatePicker mDatePicker;
+
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
 
@@ -46,7 +54,41 @@ public class task_fragment extends Fragment implements TaskAdapter.MyItemLongCli
 
         recyclerView =(RecyclerView)v.findViewById(R.id.recycler_view);
 
-        Filter = (Button)v.findViewById(R.id.filter);
+
+        TimeFilter=(Button)v.findViewById(R.id.filter);
+        SimpleDateFormat format =   new SimpleDateFormat( "yyyy-MM-dd" );
+        Date date = new Date();
+        String time=format.format(date);
+        final int year,month,day;
+        format=new SimpleDateFormat("yyyy");
+        year=Integer.parseInt(format.format(date));
+        format=new SimpleDateFormat("MM");
+        month=Integer.parseInt(format.format(date));
+        format=new SimpleDateFormat("dd");
+        day=Integer.parseInt(format.format(date));
+        TimeFilter.setText(time);
+        TimeFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                TimeSelector timeSelector = new TimeSelector(getActivity(), new TimeSelector.ResultHandler() {
+                    @Override
+                    public void handle(String time) {
+                        Toast.makeText(getActivity(), time, Toast.LENGTH_LONG).show();
+                    }
+                }, "2015-11-22 17:34", "2015-12-1 15:20");
+                timeSelector.setMode(TimeSelector.MODE.YMD);
+                timeSelector.show();
+
+            }
+
+
+
+
+
+        });
+
+
         mResourceFAB=(FloatingActionButton)v.findViewById(R.id.resource_fab);
         mTaskFAB=(FloatingActionButton)v.findViewById(R.id.task_fab);
         mAddFAB=(FloatingActionButton)v.findViewById(R.id.add_fab);
@@ -56,9 +98,6 @@ public class task_fragment extends Fragment implements TaskAdapter.MyItemLongCli
         mTaskFAB.setEnabled(false);
         mResourceFAB.setEnabled(false);
 
-        year=(EditText)v.findViewById(R.id.year);
-        month=(EditText)v.findViewById(R.id.month);
-        day=(EditText)v.findViewById(R.id.day);
 
         layoutManager= new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
