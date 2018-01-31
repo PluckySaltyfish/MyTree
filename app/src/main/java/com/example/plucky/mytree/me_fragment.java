@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,10 +20,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -37,8 +40,6 @@ public class me_fragment extends Fragment {
     private AvatarImageView mImageView;
     private Button takePhoto;
     private Button chooseFromAlbum;
-    private Button OkButton;
-    private AvatarImageView picture;
 
     public static final int TAKE_PHOTO=1;
     public static final int CHOOSE_PHOTO=2;
@@ -64,25 +65,35 @@ public class me_fragment extends Fragment {
         mImageView.setImageResource(R.drawable.me);
 
         final View contentView = inflater.inflate(R.layout.popupwindow,container,false);
-        final PopupWindow popupWindow = new PopupWindow(contentView,600,700);
+        final PopupWindow popupWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
 
         popupWindow.setOutsideTouchable(false);
         popupWindow.setFocusable(true);
+        ColorDrawable dw=new ColorDrawable(0xb0000000);
+        popupWindow.setBackgroundDrawable(dw);
+        popupWindow.setAnimationStyle(R.style.take_photo_anim);
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-
                 takePhoto=(Button) contentView.findViewById(R.id.takephoto);
                 chooseFromAlbum=(Button) contentView.findViewById(R.id.frompicture);
-                picture=(AvatarImageView) contentView.findViewById(R.id.touxiang);
-                OkButton=(Button) contentView.findViewById(R.id.ok);
-
 
                 popupWindow.showAtLocation(contentView, Gravity.CENTER_HORIZONTAL,10,10);
 
-                picture.setImageResource(R.drawable.me);
+                contentView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        int height=contentView.findViewById(R.id.background).getTop();
+                        int y=(int)event.getY();
+                        if(event.getAction()==MotionEvent.ACTION_UP){
+                            if(y<height){
+                                popupWindow.dismiss();
+                            }
+                        }
+                        return true;
+                    }
+                });
 
                 takePhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -119,26 +130,9 @@ public class me_fragment extends Fragment {
                     }
                 });
 
-                OkButton.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        //picture.buildDrawingCache(true);
-                        //picture.buildDrawingCache();
-
-                        //mBitmap=picture.getDrawingCache();
-                        //picture.setDrawingCacheEnabled(false);
-
-                        mImageView.setImageBitmap(mBitmap);
-                    }
-                });
-
-
             }
         });
-
-
         return v;
-
     }
 
     private void openAlbum(){
@@ -169,7 +163,7 @@ public class me_fragment extends Fragment {
                     try{
                         //show photo by camera
                         mBitmap= BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(imageUri));
-                        picture.setImageBitmap(mBitmap);
+                        mImageView.setImageBitmap(mBitmap);
                     }catch (FileNotFoundException e){
                         e.printStackTrace();
                     }
@@ -234,7 +228,7 @@ public class me_fragment extends Fragment {
     private void displayImage(String imagePath){
         if(imagePath!=null){
             mBitmap=BitmapFactory.decodeFile(imagePath);
-            picture.setImageBitmap(mBitmap);
+            mImageView.setImageBitmap(mBitmap);
         }else{
             Toast.makeText(getActivity(),"failed to get image",Toast.LENGTH_SHORT).show();
         }
