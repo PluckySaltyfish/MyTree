@@ -1,2 +1,2 @@
-# Depracted note
+# Deprecated note
 move to repository Tree
